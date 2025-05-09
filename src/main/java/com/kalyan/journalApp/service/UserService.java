@@ -24,19 +24,16 @@ public class UserService {
     public boolean saveNewUser(User user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles(Arrays.asList("USER"));
+            user.setRoles(Arrays.asList("USER")); // Ensure ROLE_ prefix
             userRepository.save(user);
-            log.error("hahahhahhahahahah");
-            log.warn("hahahhahhahahahah");
-            log.info("hahahhahhahahahah");
-            log.debug("hahahhahhahahahah");
-            log.trace("hahahhahhahahahah");
+            log.info("User {} created successfully.", user.getUsername());
             return true;
         } catch (Exception e) {
-
+            log.error("Error creating user: {}", user.getUsername(), e);
             return false;
         }
     }
+
 
     public void saveAdmin(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
