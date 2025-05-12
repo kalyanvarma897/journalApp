@@ -7,31 +7,21 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Document(collection = "users")
+@Document(collection = "config_journal_app")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Builder
-public class User {
-    @Id
-    private ObjectId id;
-    @Indexed(unique = true)
-    @NonNull
-    private String username;
-    private String email;
-    private Boolean sentimentAnalysis;
-    @NonNull
-    private String password;
+public class ConfigJournalAppEntity {
+    private String key;
+    private String value;
 
-    @DBRef
-    private List<JournalEntry> journalEntries=new ArrayList<>();
-    private List<String>roles;
+
 
 
 }
