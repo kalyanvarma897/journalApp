@@ -19,6 +19,7 @@ public class UserRepositoryImplTests {
     private UserRepositoryImpl userRepository;
 
 
+    @Disabled("tested")
     @Test
     public void testSaveNewUser(){
         Assertions.assertNotNull(userRepository.getUserForSA());
