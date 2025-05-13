@@ -24,15 +24,29 @@ public class WhetherService {
     @Autowired
     private AppCache appCache;
 
+    @Autowired
+    private RedisService redisService;
+
 
 
 
 
     public WhetherResponse getWhether(String city){
-        String finalAPI=appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace("<city>",city).replace("<apiKey>",apiKey);
-        ResponseEntity<WhetherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WhetherResponse.class);
-        WhetherResponse body =response.getBody();
-        return body;
+        WhetherResponse whetherResponse = redisService.get("whether_of_" + city, WhetherResponse.class);
+        if(whetherResponse!=null){
+            return whetherResponse;
+        }else{
+            String finalAPI=appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace("<city>",city).replace("<apiKey>",apiKey);
+            ResponseEntity<WhetherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WhetherResponse.class);
+            WhetherResponse body =response.getBody();
+            if(body!=null){
+                redisService.set("whether_of_"+city,body,3001);
+
+            }
+            return body;
+
+        }
+
 
     }
 }
