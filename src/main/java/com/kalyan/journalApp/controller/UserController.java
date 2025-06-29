@@ -5,6 +5,7 @@ import com.kalyan.journalApp.entity.User;
 import com.kalyan.journalApp.repository.UserRepository;
 import com.kalyan.journalApp.service.UserService;
 import com.kalyan.journalApp.service.WhetherService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User APIs", description = "Read, Update & Delete User")
 public class UserController {
 
     @Autowired
